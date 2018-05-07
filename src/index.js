@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 // Keeps track of how many requests are currently active.
 export let activeRequests = 0;
 
-/* 
+/*
   Store a reference to the ProgressBar so 'progressBarFetch' can
   move the ProgressBar to the 'init' state.
 */
@@ -19,7 +19,7 @@ export let progressBar: ProgressBar;
   |   \----\                      |
   |         \                     |
   |          \                    |
-  |           ▾                   | 
+  |           ▾                   |
   ---------  hibernate <-----------
 
   hibernate: no animation is running the bar is invisible
@@ -56,7 +56,7 @@ export class ProgressBar extends Component<Props, State> {
    * The ProgressBar continuously checks the status of how many
    * requests are currently active, and will accordingly move
    * to another state.
-   * 
+   *
    * @memberof ProgressBar
    */
   tick() {
@@ -128,8 +128,8 @@ export class ProgressBar extends Component<Props, State> {
       return null;
     }
 
-    const width = mode === 'complete' ? 100 : mode === 'init' ? 0 : 80;
-    const animationSpeed = mode === 'complete' ? 0.8 : 30;
+    const width = mode === 'complete' ? 100 : mode === 'init' ? 0 : (this.props.activeWidth || 80);
+    const animationSpeed = mode === 'complete' ? (this.props.activeSpeed || 0.8) : (this.props.completeSpeed || 30);
     const transition =
       mode === 'init' ? '' : `width ${animationSpeed}s ease-in`;
 
@@ -162,15 +162,15 @@ export function setOriginalFetch(nextOriginalFetch: FetchSignature) {
 
 /**
  * Wrapper around fetch: https://developer.mozilla.org/en/docs/Web/API/Fetch_API
- * 
+ *
  * It is used to monitor the number of requests which are currently
  * active. Each time a requests is made it increases the number of
  * requests, each time a request is finished, the number is decreased.
- * 
+ *
  * @export
  * @param {string} url The url you want to send a request to.
  * @param {RequestOptions} [options] The options you want to pass for that request
- * @returns {Promise<Response>} A Promise which returns a Response 
+ * @returns {Promise<Response>} A Promise which returns a Response
  */
 export function progressBarFetch(
   url: string,
@@ -195,12 +195,12 @@ export function progressBarFetch(
 
 /**
  * Sets the number of activeRequests manually.
- * 
+ *
  * This method exists for testing purposes, so you should not
  * use it.
- * 
+ *
  * @export
- * @param {number} nextActiveRequest 
+ * @param {number} nextActiveRequest
  */
 export function setActiveRequests(nextActiveRequest: number) {
   activeRequests = nextActiveRequest;
