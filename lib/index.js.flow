@@ -46,8 +46,8 @@ export class ProgressBar extends Component<Props, State> {
     mode: 'hibernate'
   };
   static defaultProps = {
-    activeSpeed: 0.8,
-    completeSpeed: 30,
+    activeSpeed: 30,
+    completeSpeed: 0.8,
     activeWidth: 80,
   };
 
@@ -138,7 +138,7 @@ export class ProgressBar extends Component<Props, State> {
     }
 
     const width = mode === 'complete' ? 100 : mode === 'init' ? 0 : this.props.activeWidth;
-    const animationSpeed = mode === 'complete' ? this.props.activeSpeed : this.props.completeSpeed;
+    const animationSpeed = mode === 'complete' ? this.props.completeSpeed : this.props.activeSpeed;
     const transition =
       mode === 'init' ? '' : `width ${String(animationSpeed)}s ease-in`;
 
